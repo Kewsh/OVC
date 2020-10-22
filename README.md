@@ -28,4 +28,5 @@ or simply use the Makefile that is located inside the code folder
 ---
 
 ## Last but not least
+In order to have a good understanding of how Omelette works, please read the note.txt file inside the code folder and ...
 *please contact me if you find any bugs :)*
