@@ -1,0 +1,53 @@
+NOTE:
+
+>> Omelette initializes the repository by creating a folder named _CTRLDIR inside your project folder
+>> in order for Omelette to function properly, it is advised that the user takes a look
+   at the file/folder names mentioned below and name their files/folders accordingly, to
+   avoid any possible interference with the program and its internal files
+>> Omelette doesnt support binary formats
+>> use the <help> command for more details
+
+>> mingw32-make -f Makefile.mak (use the makefile)
+>> mingw32-make -f Makefile.mak clean (delete the .o files)
+>> gcc main.c stash.c status.c select.c unselect.c reset.c log.c init.c help.c commit.c -o main (compile manually)
+
+>>STRUCTURE OF _CTRLDIR:
+
+  ._CTRLDIR
+    ||||__.flags(DIR)
+    ||||    ||__.selectFlag.txt
+    ||||    |___.stashFlag.txt
+    ||||__.log.txt
+    |||___.commit(DIR)
+    ||       |__.commitID.txt
+    ||          ...
+    ||____.origin(DIR)
+    |        |__._originFiles.txt
+    |           ...
+    |_____.temps(DIR)
+            |||||||_.stashBackup(DIR)
+            ||||||__.stash(DIR)
+            |||||___.diffPipe.txt
+            ||||____.selectedFiles.txt
+            |||_____.fullVrs.txt
+            ||______.fullVrs2.txt
+            |_______.popID.txt
+
+
+>>STRUCTURE OF COMMIT:
+
+
+  .commit
+   ||||___.commitID.txt
+   |||____.commit1(DIR)
+   ||       ||||__.family.txt
+   ||       |||___.commitedFiles.txt
+   ||       ||____.file1(DIR)
+   ||       |       ||__.file1-d-
+   ||       |       |___.file1-f-
+   ||       |_____.file2(DIR)
+   ||                |__.file2-d-
+   ||             ...
+   ||_____.commit2(DIR)
+   |______.commit3(DIR)
+          ...
