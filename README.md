@@ -1,7 +1,7 @@
 # OVC
 **Omelette version control**
 
-Omelette is a CMD-based, user-friendly, and open source version control system used for maintaining and managing projects
+Omelette is a CMD-based, user-friendly, and open source version control system written in pure C, used for maintaining and managing projects
 
 ---
 
