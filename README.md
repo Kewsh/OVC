@@ -7,7 +7,7 @@ Omelette is a CMD-based, user-friendly, and open source version control system u
 
 ## How it works
 Omelette works similar to git, with a few changes to make things easier for the user. It uses its own diff algorithm to find
-the different between different versions of a file to store the data incrementally and in less space. Omelette brings a decent
+the difference between different versions of a file to store the data incrementally and in less space. Omelette brings a decent
 variety of commands for the user to use. A very detailed explanation of every command can be accessed inside the program
 
 ---
