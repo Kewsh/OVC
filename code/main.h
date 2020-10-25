@@ -74,7 +74,7 @@ void unselectAll(void);
 
 //select
 int selectFile(const char *);
-void selectAllRecursive(DIR *, FILE *, const char *);
+void selectAllRecursive(DIR *, FILE *, const char *, int *);
 void selectAll(void);
 void selectList(void);
 
