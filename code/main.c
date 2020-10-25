@@ -232,6 +232,7 @@ int main(){
       prjPath[k++] = c;
     prjPath[k] = '\0';                                                                                       // getting the main project directory from the user
   }while((mainDir = opendir(prjPath)) == NULL);                                                              // invalid path
+  printf("\nroot is %s\n\n", prjPath);
   while ((entry = readdir(mainDir)) != NULL){
     if (strcmp(entry->d_name, "_CTRLDIR") == 0){
       isInitialized = 1;
