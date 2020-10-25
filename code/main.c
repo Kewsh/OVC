@@ -8,7 +8,7 @@
 int validateEntry(char *userCommand, int isInitialized){
   char delimiter[] = " ", commitDesc[MAX_COMMITDESC_SIZE] = "";
   char c, *token, prompt;
-  int k, resetID, stashID, stashFlag, temp = 0;
+  int k, resetID, stashID, stashFlag = 0, temp = 0;
   FILE *fptr;
   token = strtok(userCommand, delimiter);                                                                    // tokenizing the command string by single spaces
   if (token == NULL)                                                                                         // empty string
@@ -17,9 +17,11 @@ int validateEntry(char *userCommand, int isInitialized){
       strcmp(token, "reset") == 0 || strcmp(token, "log") == 0 || strcmp(token, "status") == 0 ||
       strcmp(token, "commit") == 0)
     temp = 1;
-  fptr = fopen("_CTRLDIR/flags/stashFlag.txt", "r");
-  fscanf(fptr, "%d", &stashFlag);
-  fclose(fptr);
+  if (isInitialized == 1){
+    fptr = fopen("_CTRLDIR/flags/stashFlag.txt", "r");
+    fscanf(fptr, "%d", &stashFlag);
+    fclose(fptr);
+  }
   if (strcmp(token, "select") == 0 && isInitialized == 1 && stashFlag == 0){
     token = strtok(NULL, delimiter);
     if (token == NULL){                                                                                      // invalid use
