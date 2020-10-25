@@ -1,9 +1,9 @@
 NOTE:
 
 >> Omelette initializes the repository by creating a folder named _CTRLDIR inside your project folder
->> in order for Omelette to function properly, it is advised that the user takes a look
-   at the file/folder names mentioned below and name their files/folders accordingly, to
-   avoid any possible interference with the program and its internal files
+>> specific characters and names are considered invalid in file path/names
+   more specifically: "_ctrldir", "_originfiles", "../", ":"
+>> when using <select> and <unselect>, your paths should be starting from root
 >> Omelette doesnt support binary formats
 >> use the <help> command for more details
 
