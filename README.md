@@ -14,14 +14,14 @@ variety of commands for the user to use. A very detailed explanation of every co
 
 ## How to use
 In order to get Omelette up and running, all you have to do is download the code folder and save it somewhere on your computer.
-then compile the code and run the generated main.exe file.
+then compile the code and run the generated ovc.exe file, or simply download and run the ovc.exe file
 
 ---
 
 ## Compile the program
 To compile the program, there are two approaches, either run the following line of code inside the code directory in CMD:
 ```
-gcc main.c stash.c status.c select.c unselect.c reset.c log.c init.c help.c commit.c -o main
+gcc main.c stash.c status.c select.c unselect.c reset.c log.c init.c help.c commit.c cf.c diff.c -o ovc
 ```
 or simply use the Makefile that is located inside the code folder
 
