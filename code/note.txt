@@ -7,9 +7,9 @@ NOTE:
 >> Omelette doesnt support binary formats
 >> use the <help> command for more details
 
->> mingw32-make -f Makefile.mak (use the makefile)
->> mingw32-make -f Makefile.mak clean (delete the .o files)
->> gcc main.c stash.c status.c select.c unselect.c reset.c log.c init.c help.c commit.c -o main (compile manually)
+>> make -f Makefile.mak (use the makefile)
+>> make -f Makefile.mak clean (delete the .o files)
+>> gcc main.c stash.c status.c select.c unselect.c reset.c log.c init.c help.c commit.c cf.c diff.c -o ovc (compile manually)
 
 >>STRUCTURE OF _CTRLDIR:
 

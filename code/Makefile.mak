@@ -1,6 +1,6 @@
 
-main: main.o stash.o status.o reset.o unselect.o select.o log.o commit.o init.o help.o
-	gcc main.o stash.o status.o reset.o unselect.o select.o log.o commit.o init.o help.o -o main
+ovc: main.o stash.o status.o reset.o unselect.o select.o log.o commit.o init.o help.o cf.o diff.o
+	gcc main.o stash.o status.o reset.o unselect.o select.o log.o commit.o init.o help.o cf.o diff.o -o ovc
 
 main.o: main.c main.h
 	gcc -c main.c
@@ -31,6 +31,12 @@ init.o: init.c main.h
 
 help.o: help.c main.h
 	gcc -c help.c
+
+cf.o: cf.c main.h
+	gcc -c cf.c
+
+diff.o: diff.c main.h
+	gcc -c diff.c
 
 clean:
 	del *.o

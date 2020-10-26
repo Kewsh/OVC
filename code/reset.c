@@ -365,34 +365,22 @@ void copyOtoM(const char *fullFilePath){
 /*
  * __createFile__ uses incremental versions of files to create the new versions
  * it does its work by creating fullVrs.txt to for a temp copy of the older version
- * and then calls cf.c to do the work and add the new file to the main directory
- * in order to communicate with cf.c, __createFile__ adds the necessary info to
- * a file called diffPipe.txt so that cf.c and read the data from there
+ * and then calls __cf__ to do the work and add the new file to the main directory
  */
 void createFile(const char *fullFilePath, int targetID){
   FILE *fptr1, *fptr2;
-  char c;
+  char c, path2[MAX_EXTRAWIDE_FULLPATH_SIZE], path3[MAX_EXTRAWIDE_FULLPATH_SIZE];
   fptr1 = fopen(fullFilePath, "r");
   fptr2 = fopen("_CTRLDIR/temps/fullVrs.txt", "w");
   while((c = fgetc(fptr1)) != EOF)
     fputc(c, fptr2);
   fclose(fptr1);
   fclose(fptr2);
-  fptr1 = fopen("_CTRLDIR/temps/diffPipe.txt", "w");
-  fprintf(fptr1, "%s\n%d\n%d", fullFilePath, targetID, 1);
-  fclose(fptr1);
+  sprintf(path2, "_CTRLDIR/commit/commit%d/%s/%s", targetID, fullFilePath, buildFileName(fullFilePath, 'd'));
+  sprintf(path3, "%s", fullFilePath);
 
-  chdir(sourcePath);
-  fptr1 = fopen("path.txt", "w");                                                                            // cf.c reads the project path from this file
-  fprintf(fptr1, "%s", prjPath);
-  fclose(fptr1);
-  system("gcc -o cf cf.c");
-  system("cf");
-  remove("path.txt");
-  chdir(prjPath);
-
+  cf(path2, path3);
   remove("_CTRLDIR/temps/fullVrs.txt");
-  remove("_CTRLDIR/temps/diffPipe.txt");
 }
 
 /*

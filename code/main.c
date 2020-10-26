@@ -233,15 +233,10 @@ int main(){
     prjPath[k] = '\0';                                                                                       // getting the main project directory from the user
   }while((mainDir = opendir(prjPath)) == NULL);                                                              // invalid path
   printf("\nroot is %s\n\n", prjPath);
-  while ((entry = readdir(mainDir)) != NULL){
-    if (strcmp(entry->d_name, "_CTRLDIR") == 0){
-      isInitialized = 1;
-      break;
-    }
-  }
   closedir(mainDir);
-  getcwd(sourcePath, MAX_FULLPATH_SIZE);                                                                     // current working directory (path for source code and exe files)
-  chdir(prjPath);                                                                                            // this is needed for a full control over the project directory
+  chdir(prjPath);
+  if (checkInitilization() == 0)
+    isInitialized = 1;
   while(1){                                                                                                  // the main loop of the program
     SetConsoleTextAttribute(console, PURPLE);
     printf("->$:");

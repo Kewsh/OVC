@@ -24,6 +24,7 @@
 #define MAX_FULLPATH_SIZE 128
 #define MAX_COMMITDESC_SIZE 128
 #define MAX_RESETPATH_SIZE 128
+#define MAX_PICK_SIZE 256
 #define MAX_CMDSTR_SIZE 256
 #define MAX_FILE_COUNT 256
 #define MAX_WIDE_FULLPATH_SIZE 256
@@ -33,11 +34,20 @@
 
 HANDLE console;
 int commitID, addLen, modLen, prevLen, curLen;
-char prjPath[MAX_FULLPATH_SIZE], sourcePath[MAX_FULLPATH_SIZE];
+int *loc_arr1, *loc_arr2, length;
+char prjPath[MAX_FULLPATH_SIZE];
 char addedFiles[MAX_FILE_COUNT][MAX_FULLPATH_SIZE], modifiedFiles[MAX_FILE_COUNT][MAX_FULLPATH_SIZE];
 char previousPaths[MAX_FILE_COUNT][MAX_FULLPATH_SIZE], currentPaths[MAX_FILE_COUNT][MAX_FULLPATH_SIZE];
 
 //function declarations
+
+//diff
+int getMax(int, int);
+void lcs(const char *, const char *, int, int);
+void diff(const char *, const char *, const char *);
+
+//cf
+void cf(const char *, const char *);
 
 //stash
 void copyBtoM(DIR *, const char *);
@@ -92,6 +102,7 @@ int commit(const char *);
 
 //init
 void init(void);
+int checkInitilization(void);
 
 //help
 void help(const char *);

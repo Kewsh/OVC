@@ -37,60 +37,42 @@ void originate(const char *fullFilePath){
 }
 
 /*
- * __launchDiff__ puts the full path of the file and commitID in _CTRLDIR\temps\diffPipe.txt
- * for diff.c to read and locate the file, it also compiles and runs diff.c; then it launches
- * cf.c the same way to create the full version of the file as well and then after its work
- * is done, __launchDiff__ deletes diffPipe.txt
+ * works with __diff__ and __cf__
  */
 void launchDiff(const char *fullFilePath){
-  char c, path[MAX_EXTRAWIDE_FULLPATH_SIZE];
-  FILE *fptr, *fptr2 = fopen("_CTRLDIR/temps/diffPipe.txt", "w");
-  sprintf(path, "_CTRLDIR/commit/commit%d/%s/%s", commitID-1, fullFilePath, buildFileName(fullFilePath, 'f'));
-  fptr = fopen(path, "r");
+  char temp[MAX_EXTRAWIDE_FULLPATH_SIZE];
+  char c, path1[MAX_EXTRAWIDE_FULLPATH_SIZE], path2[MAX_EXTRAWIDE_FULLPATH_SIZE], path3[MAX_EXTRAWIDE_FULLPATH_SIZE];
+  FILE *fptr, *fptr2;
+  sprintf(path1, "_CTRLDIR/commit/commit%d/%s/%s", commitID-1, fullFilePath, buildFileName(fullFilePath, 'f'));
+  fptr = fopen(path1, "r");
   if (fptr == NULL){                                                                                         // if we dont find the -f- version, it means that previous commit was the origin of this file
-    sprintf(path, "_CTRLDIR/origin/%s", fullFilePath);
-    fprintf(fptr2, "%s\n%s\n%d", path, fullFilePath, commitID);                                              // getting the file from origin
+    sprintf(path1, "_CTRLDIR/origin/%s", fullFilePath);
+    sprintf(path3, "_CTRLDIR/commit/commit%d/%s/%s", commitID, fullFilePath, buildFileName(fullFilePath, 'd'));
   }
-  else
-    fprintf(fptr2, "_CTRLDIR/commit/commit%d/%s/%s\n%s\n%d", commitID-1, fullFilePath, buildFileName(fullFilePath, 'f'), fullFilePath, commitID);
-  fclose(fptr);
-  fclose(fptr2);
+  else{
+    fclose(fptr);
+    sprintf(path3, "_CTRLDIR/commit/commit%d/%s/%s", commitID, fullFilePath, buildFileName(fullFilePath, 'd'));
+  }
+  sprintf(path2, "%s", fullFilePath);
 
-  chdir(sourcePath);
-  fptr = fopen("path.txt", "w");                                                                             // diff.c reads the project path from this file
-  fprintf(fptr, "%s", prjPath);
-  fclose(fptr);
-  system("gcc -o diff diff.c");
-  system("diff");
-  remove("path.txt");
-  chdir(prjPath);
+  diff(path1, path2, path3);
 
-  sprintf(path, "_CTRLDIR/commit/commit%d/%s/%s", commitID-1, fullFilePath, buildFileName(fullFilePath, 'f'));
-  fptr = fopen(path, "r");
+  sprintf(temp, "_CTRLDIR/commit/commit%d/%s/%s", commitID-1, fullFilePath, buildFileName(fullFilePath, 'f'));
+  fptr = fopen(temp, "r");
   if (fptr == NULL){
-    sprintf(path, "_CTRLDIR/origin/%s", fullFilePath);
-    fptr = fopen(path, "r");
+    sprintf(temp, "_CTRLDIR/origin/%s", fullFilePath);
+    fptr = fopen(temp, "r");
   }
   fptr2 = fopen("_CTRLDIR/temps/fullVrs.txt", "w");
   while((c = fgetc(fptr)) != EOF)
     fputc(c, fptr2);
   fclose(fptr);
   fclose(fptr2);
-  fptr = fopen("_CTRLDIR/temps/diffPipe.txt", "w");
-  fprintf(fptr, "%s\n%d\n%d", fullFilePath, commitID, 2);
-  fclose(fptr);
+  sprintf(path2, "_CTRLDIR/commit/commit%d/%s/%s", commitID, fullFilePath, buildFileName(fullFilePath, 'd'));
+  sprintf(path3, "_CTRLDIR/commit/commit%d/%s/%s", commitID, fullFilePath, buildFileName(fullFilePath, 'f'));
 
-  chdir(sourcePath);
-  fptr = fopen("path.txt", "w");                                                                             // cf.c reads the project path from this file
-  fprintf(fptr, "%s", prjPath);
-  fclose(fptr);
-  system("gcc -o cf cf.c");
-  system("cf");
-  remove("path.txt");
-  chdir(prjPath);
-
+  cf(path2, path3);
   remove("_CTRLDIR/temps/fullVrs.txt");
-  remove("_CTRLDIR/temps/diffPipe.txt");
 }
 
 /*

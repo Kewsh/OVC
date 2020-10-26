@@ -6,7 +6,7 @@
  */
 void fileStatus(const char *fullFilePath, int targetCommitID){
   int i, count = 0, tmp = 0, originID, pathArr[MAX_RESETPATH_SIZE], pathLength, cmtID, read, tmp2;
-  char c1, c2, path[MAX_FULLPATH_SIZE];
+  char c1, c2, path[MAX_FULLPATH_SIZE], path2[MAX_EXTRAWIDE_FULLPATH_SIZE], path3[MAX_EXTRAWIDE_FULLPATH_SIZE];
   FILE *fptr1, *fptr2;
   for (i = 0; strlen(previousPaths[i]) != 0; i++){
     if (strcmp(fullFilePath, previousPaths[i]) == 0){
@@ -102,17 +102,11 @@ void fileStatus(const char *fullFilePath, int targetCommitID){
               fclose(fptr2);
             }
             else{
-              fptr1 = fopen("_CTRLDIR/temps/diffPipe.txt", "w");
-              fprintf(fptr1, "%s\n%d\n%d", fullFilePath, cmtID, 3);
-              fclose(fptr1);
-              chdir(sourcePath);
-              fptr1 = fopen("path.txt", "w");                                                                // cf.c reads the project path from this file
-              fprintf(fptr1, "%s", prjPath);
-              fclose(fptr1);
-              system("gcc -o cf cf.c");
-              system("cf");
-              remove("path.txt");
-              chdir(prjPath);
+              sprintf(path2, "_CTRLDIR/commit/commit%d/%s/%s", cmtID, fullFilePath, buildFileName(fullFilePath, 'd'));
+              sprintf(path3, "_CTRLDIR/temps/fullVrs2.txt");
+
+              cf(path2, path3);
+
               fptr1 = fopen("_CTRLDIR/temps/fullVrs2.txt", "r");
               fptr2 = fopen("_CTRLDIR/temps/fullVrs.txt", "w");
               while((c1 = fgetc(fptr1)) != EOF)
@@ -120,7 +114,6 @@ void fileStatus(const char *fullFilePath, int targetCommitID){
               fclose(fptr1);
               fclose(fptr2);
               remove("_CTRLDIR/temps/fullVrs2.txt");
-              remove("_CTRLDIR/temps/diffPipe.txt");
             }
             read++;
           }
